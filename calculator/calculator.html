@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Dark Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #121212;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .calculator-container {
+            background-color: #000000;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .calculator {
+            width: 350px;
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .display {
+            background-color: #1e1e1e;
+            color: #68bef4;
+            font-size: 2.5em;
+            text-align: right;
+            padding: 20px;
+            border-bottom: 2px solid #333;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 15px 15px 0 0;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+        }
+
+        .btn {
+            padding: 20px;
+            font-size: 1.5em;
+            border: none;
+            background-color: #333;
+            color: #eee;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #444;
+            box-shadow: 0 0 10px rgba(64, 65, 65, 0.5);
+        }
+
+        .operator {
+            background-color: #c42d0c;
+            color: #fff;
+        }
+
+        .operator:hover {
+            background-color: #ff704d;
+            box-shadow: 0 0 10px rgba(255, 87, 51, 0.5);
+        }
+
+        .equal {
+            grid-column: span 2;
+            background-color: #6f9ccc;
+            color: #fff;
+        }
+
+        .equal:hover {
+            background-color: #0069d9;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+
+        .clear {
+            grid-column: span 2;
+            background-color: #ed63ba;
+            color: #fff;
+        }
+
+        .clear:hover {
+            background-color: #c82333;
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="calculator">
+            <div class="display" id="display">0</div>
+            <div class="buttons">
+                <button class="btn" data-value="7">7</button>
+                <button class="btn" data-value="8">8</button>
+                <button class="btn" data-value="9">9</button>
+                <button class="btn operator" data-value="/">÷</button>
+                <button class="btn" data-value="4">4</button>
+                <button class="btn" data-value="5">5</button>
+                <button class="btn" data-value="6">6</button>
+                <button class="btn operator" data-value="*">×</button>
+                <button class="btn" data-value="1">1</button>
+                <button class="btn" data-value="2">2</button>
+                <button class="btn" data-value="3">3</button>
+                <button class="btn operator" data-value="-">−</button>
+                <button class="btn" data-value="0">0</button>
+                <button class="btn" data-value=".">.</button>
+                <button class="btn operator" data-value="+">+</button>
+                <button class="btn equal" data-value="=">=</button>
+                <button class="btn clear" data-value="C">C</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const display = document.getElementById('display');
+            const buttons = document.querySelectorAll('.btn');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+
+                    if (value === 'C') {
+                        display.innerText = '0';
+                    } else if (value === '=') {
+                        try {
+                            display.innerText = eval(display.innerText.replace('×', '*').replace('÷', '/'));
+                        } catch {
+                            display.innerText = 'Error';
+                        }
+                    } else {
+                        if (display.innerText === '0') {
+                            display.innerText = value;
+                        } else {
+                            display.innerText += value;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
